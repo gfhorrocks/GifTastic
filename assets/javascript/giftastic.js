@@ -1,6 +1,5 @@
 $(document).ready(function () {
     var games = ["Apex Legends", "Halo", "Counter-Strike", "Tribes Ascend", "Stardew Valley", "Quake", "PUBG", "Overwatch", "Rainbow Six", "Rocket League", "Dota 2", "Overcooked", "Starcraft", "Gears of War", "Titanfall", "Left 4 Dead", "Call of Duty", "Battlefield 5", "Portal", "Terraria"];
-    var index = 0;
 
     function drawButtons() {
         //For each game in the array
@@ -33,11 +32,8 @@ $(document).ready(function () {
         //Pulls the button id of button clicked on
         var search = $(this).attr("id").trim();
 
-        console.log(offset);
-        console.log(noSpace);
-
         //sets the giphy url using the search id of button
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + noSpace + "&offset=" + offset + "&limit=10&api_key=jnJ7OS1VuSW8ry3Mh4DStJK69YqH54Cx";
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + search + "&offset=" + offset + "&limit=10&api_key=jnJ7OS1VuSW8ry3Mh4DStJK69YqH54Cx";
 
         //API query using ajax
         $.ajax({
