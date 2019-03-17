@@ -1,13 +1,16 @@
 $(document).ready(function () {
     var games = ["Apex Legends", "Halo", "Counter-Strike", "Tribes Ascend", "Stardew Valley", "Quake", "PUBG", "Overwatch", "Rainbow Six", "Rocket League", "Dota 2", "Overcooked", "Starcraft", "Gears of War", "Titanfall", "Left 4 Dead", "Call of Duty", "Battlefield 5", "Portal", "Terraria"];
+    var animateTracker = [];
 
     function drawButtons() {
+        //Clears the buttonDiv
+        $("#buttonDiv").empty();
+
         //For each game in the array
         for (var i = 0; i < games.length; i++) {
             //Creates a new button
             var newButton = $("<button>");
-
-            //Adds gifButton class and bootstrap style
+            //Adds bootstrap style and gifButton class
             newButton.addClass("btn btn-primary gifButton");
             //Adds id to know later on what game we've clicked on
             newButton.attr("id", games[i]);
@@ -21,8 +24,9 @@ $(document).ready(function () {
     //Calls drawButtons so that buttons show up when page loads
     drawButtons();
 
-    $(".gifButton").on("click", function () {
-
+    //When gifButton is clicked
+    $("#buttonDiv").on("click", ".gifButton", function () {
+        console.log($(this).attr("id"));
         //Clears the GIF div for new gifs
         $("#gifDiv").empty();
 
@@ -40,22 +44,70 @@ $(document).ready(function () {
             url: queryURL,
             method: "GET"
         }).then(function (response) {
-            // console.log(response);
+            console.log(response);
 
             //Loops through the GIPHY response data (length of 10 for this assignment)
             for (var i = 0; i < response.data.length; i++) {
 
                 //Creates new IMG
                 var newGif = $("<img>");
-
                 //Adds GIF id to the IMG so we know what we're clicking on
                 newGif.attr("id", response.data[i].id);
+                //Adds index value to animateTracker array
+                newGif.attr("index", i);
                 //Adds src to IMG so that it displays GIF
                 newGif.attr("src", response.data[i].images["480w_still"].url);
+                //Adds class gifImage to the image
+                newGif.addClass("gifImage");
+
+                animateTracker[i] = 0;
 
                 //Appends the new IMG to the gifDiv
                 $("#gifDiv").append(newGif);
             }
         });
     });
+
+    //When you click on a class gifImage within the gifDiv section
+    $("#gifDiv").on("click", ".gifImage", function () {
+
+        //Checks to see what index we've clicked on and compares it to 0 (not animated) or 1 (animated) from animateTracker
+        if (animateTracker[$(this).attr("index")] === 0) {
+
+            //Changes the source of image to the animated one
+            $(this).attr("src", "https://media1.giphy.com/media/" + $(this).attr("id") + "/giphy.gif");
+            //Sets status to "animated"
+            animateTracker[$(this).attr("index")] = 1;
+        }
+        else {
+            //Changes the source of image to the still one
+            $(this).attr("src", "https://media1.giphy.com/media/" + $(this).attr("id") + "/giphy_s.gif");
+            //Sets the status to still
+            animateTracker[$(this).attr("index")] = 0;
+        }
+    });
+
+    //When you click on the Submit button
+    $("#submitGame").click(function () {
+        //checks to make sure you have typed something in the box
+        if ($("#input").val() != "") {
+            //Takes value (trimmed) and pushes it at the end of the games array
+            games.push($("#input").val().trim());
+            //Empties the input field so you can type in another game
+            $("#input").val("");
+            //Calls the drawButtons function to update the list on screen
+            drawButtons();
+        }
+    });
+
+    //When you hit ENTER on the Submit input field
+    $("#input").keypress(function (event) {
+        if (event.which == 13) {
+            $("#submitGame").click();
+        }
+    });
+
+
+
+
 });
