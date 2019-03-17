@@ -107,8 +107,4 @@ $(document).ready(function () {
             $("#submitGame").click();
         }
     });
-
-
-
-
 });
