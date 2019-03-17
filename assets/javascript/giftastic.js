@@ -88,7 +88,8 @@ $(document).ready(function () {
     });
 
     //When you click on the Submit button
-    $("#submitGame").click(function () {
+    $("#submitGame").click(function (event) {
+        event.preventDefault();
         //checks to make sure you have typed something in the box
         if ($("#input").val() != "") {
             //Takes value (trimmed) and pushes it at the end of the games array
