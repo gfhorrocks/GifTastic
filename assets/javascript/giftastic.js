@@ -26,7 +26,6 @@ $(document).ready(function () {
 
     //When gifButton is clicked
     $("#buttonDiv").on("click", ".gifButton", function () {
-        console.log($(this).attr("id"));
         //Clears the GIF div for new gifs
         $("#gifDiv").empty();
 
@@ -44,7 +43,6 @@ $(document).ready(function () {
             url: queryURL,
             method: "GET"
         }).then(function (response) {
-            console.log(response);
 
             //Loops through the GIPHY response data (length of 10 for this assignment)
             for (var i = 0; i < response.data.length; i++) {
