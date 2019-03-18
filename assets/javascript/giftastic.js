@@ -48,6 +48,7 @@ $(document).ready(function () {
             //Loops through the GIPHY response data (length of 10 for this assignment)
             for (var i = 0; i < response.data.length; i++) {
 
+                //My original Code which didn't include adding the Rating... 
                 // //Creates new IMG
                 // var newGif = $("<img>");
                 // //Adds GIF id to the IMG so we know what we're clicking on
@@ -61,10 +62,10 @@ $(document).ready(function () {
                 // //Append the GIF rating
                 // newGif.append(response.data[i].rating);
 
+                //Creates a div with class gifDiv
                 var newGif = $("<div class='gifDiv'>");
-                
+                //Adds image with id and src to get GIPHY id and URL to bring into next step (drawing gifs on screen)
                 newGif.html("<img class='gifImage' id='"+response.data[i].id+"' src='"+response.data[i].images["480w_still"].url+"'></br>"+"<strong>Rated "+response.data[i].rating+"</strong>");
-                
                 //Set default animation state to still
                 animateTracker[i] = 0;
                 //Appends the new IMG to the gifDiv
