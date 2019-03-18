@@ -65,6 +65,7 @@ $(document).ready(function () {
                 //Creates a div with class gifDiv
                 var newGif = $("<div class='gifDiv'>");
                 //Adds image with id and src to get GIPHY id and URL to bring into next step (drawing gifs on screen)
+                //I could have created a div and then appended a img to it.. but this is one line that works
                 newGif.html("<img class='gifImage' id='"+response.data[i].id+"' src='"+response.data[i].images["480w_still"].url+"'></br>"+"<strong>Rated "+response.data[i].rating+"</strong>");
                 //Set default animation state to still
                 animateTracker[i] = 0;
