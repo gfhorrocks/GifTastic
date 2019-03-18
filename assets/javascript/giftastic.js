@@ -20,7 +20,7 @@ $(document).ready(function () {
             $("#buttonDiv").append(newButton);
         }
     }
-
+    
     //Calls drawButtons so that buttons show up when page loads
     drawButtons();
 
@@ -43,23 +43,30 @@ $(document).ready(function () {
             url: queryURL,
             method: "GET"
         }).then(function (response) {
-
+            console.log(response);
+            
             //Loops through the GIPHY response data (length of 10 for this assignment)
             for (var i = 0; i < response.data.length; i++) {
 
-                //Creates new IMG
-                var newGif = $("<img>");
-                //Adds GIF id to the IMG so we know what we're clicking on
-                newGif.attr("id", response.data[i].id);
-                //Adds index value to animateTracker array
-                newGif.attr("index", i);
-                //Adds src to IMG so that it displays GIF
-                newGif.attr("src", response.data[i].images["480w_still"].url);
-                //Adds class gifImage to the image
-                newGif.addClass("gifImage");
+                // //Creates new IMG
+                // var newGif = $("<img>");
+                // //Adds GIF id to the IMG so we know what we're clicking on
+                // newGif.attr("id", response.data[i].id);
+                // //Adds index value to animateTracker array
+                // newGif.attr("index", i);
+                // //Adds src to IMG so that it displays GIF
+                // newGif.attr("src", response.data[i].images["480w_still"].url);
+                // //Adds class gifImage to the image
+                // newGif.addClass("gifImage");
+                // //Append the GIF rating
+                // newGif.append(response.data[i].rating);
 
+                var newGif = $("<div class='gifDiv'>");
+                
+                newGif.html("<img class='gifImage' id='"+response.data[i].id+"' src='"+response.data[i].images["480w_still"].url+"'></br>"+"<strong>Rated "+response.data[i].rating+"</strong>");
+                
+                //Set default animation state to still
                 animateTracker[i] = 0;
-
                 //Appends the new IMG to the gifDiv
                 $("#gifDiv").append(newGif);
             }
@@ -67,8 +74,8 @@ $(document).ready(function () {
     });
 
     //When you click on a class gifImage within the gifDiv section
-    $("#gifDiv").on("click", ".gifImage", function () {
-
+    $(document).on("click", ".gifImage", function () {
+        console.log("clicked");
         //Checks to see what index we've clicked on and compares it to 0 (not animated) or 1 (animated) from animateTracker
         if (animateTracker[$(this).attr("index")] === 0) {
 
